@@ -27,4 +27,3 @@ void main() {
     expect(find.text('SPRAY'), findsOneWidget);
   });
 }
-

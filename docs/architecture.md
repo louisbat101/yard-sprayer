@@ -44,14 +44,21 @@ GPS speed ──► required GPM ──► rate controller ──► valve comma
 
 Only the I/O differs on hardware:
 
-| Prototype (Android) | ESP32-S3 hardware |
+| Prototype (Android) | ESP32-S3 hardware (PWM Solenoid) |
 |---|---|
-| `GeolocatorGpsSource` | u-blox M10 GPS |
-| `SimulatedFlowMeter` | real flow meter |
-| `SimulatedPressureSensor` | real pressure transducer |
-| valve command 0-100% | 0-5 V DAC → proportional valve |
-| `PumpController` flag | pump relay |
-| `SectionController` flags | left/right section relays |
+| `GeolocatorGpsSource` | u-blox M10 GPS (UART) |
+| `SimulatedFlowMeter` | Turbine flow meter (frequency input, GPIO interrupt) |
+| `SimulatedPressureSensor` | Pressure transducer (0-5V ADC) |
+| valve command 0-100% | **PWM duty cycle (20Hz, GPIO 25) → 12V solenoid coil** |
+| `PumpController` flag | Pump relay (GPIO 14) |
+| `SectionController` flags | Left/right section relays (GPIO 26/27) |
+
+**Valve Control (Key Change):**
+- **NOT a proportional valve** (complex, expensive $80-150)
+- **Simple PWM solenoid** (cheap, proven $20-50)
+- Rate controller already outputs 0-100% → maps directly to PWM duty cycle
+- 20 Hz PWM gives smooth opening + acceptable solenoid buzz
+- See [esp32-pwm-solenoid.md](esp32-pwm-solenoid.md) for firmware details
 
 ## Concurrency / tick
 

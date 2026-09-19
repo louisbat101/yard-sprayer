@@ -41,6 +41,11 @@ class SectionController {
     final current = List<bool>.of(_on);
     _on
       ..clear()
-      ..addAll(List<bool>.generate(newCount, (i) => i < current.length ? current[i] : true));
+      ..addAll(
+        List<bool>.generate(
+          newCount,
+          (i) => i < current.length ? current[i] : true,
+        ),
+      );
   }
 }

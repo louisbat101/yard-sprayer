@@ -36,13 +36,13 @@ class GpsFix {
   double get speedMph => SprayMath.mpsToMph(speedMps);
 
   static GpsFix invalid() => GpsFix(
-        time: DateTime.now(),
-        latitude: 0,
-        longitude: 0,
-        speedMps: 0,
-        headingDeg: 0,
-        accuracyM: double.infinity,
-        satellites: 0,
-        hasFix: false,
-      );
+    time: DateTime.now(),
+    latitude: 0,
+    longitude: 0,
+    speedMps: 0,
+    headingDeg: 0,
+    accuracyM: double.infinity,
+    satellites: 0,
+    hasFix: false,
+  );
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../state/sprayer_view_model.dart';
+import 'guidance_screen.dart';
 import 'main_screen.dart';
 import 'settings_screen.dart';
 import 'simulation_screen.dart';
 
-/// Top-level navigation shell (MAIN / SIM / SETTINGS tabs).
+/// Top-level navigation shell (MAIN / GUIDE / SIM / SETTINGS tabs).
 class HomeShell extends StatefulWidget {
   final SprayerViewModel vm;
 
@@ -25,6 +26,7 @@ class _HomeShellState extends State<HomeShell> {
         index: _index,
         children: [
           MainScreen(vm: widget.vm),
+          GuidanceScreen(vm: widget.vm),
           SimulationScreen(vm: widget.vm),
           SettingsScreen(vm: widget.vm),
         ],
@@ -34,7 +36,11 @@ class _HomeShellState extends State<HomeShell> {
         onDestinationSelected: (i) => setState(() => _index = i),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.speed), label: 'MAIN'),
-          NavigationDestination(icon: Icon(Icons.science_outlined), label: 'SIM'),
+          NavigationDestination(icon: Icon(Icons.alt_route), label: 'GUIDE'),
+          NavigationDestination(
+            icon: Icon(Icons.science_outlined),
+            label: 'SIM',
+          ),
           NavigationDestination(icon: Icon(Icons.settings), label: 'SETTINGS'),
         ],
       ),

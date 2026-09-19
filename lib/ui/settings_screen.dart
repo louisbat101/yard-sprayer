@@ -50,8 +50,16 @@ class SettingsScreen extends StatelessWidget {
                             divisions: 35,
                             format: (v) => '${v.toStringAsFixed(0)} FT',
                             onChanged: (v) => _set(() {
-                              final widths = SprayerConfig.equalSections(v, cfg.sectionCount);
-                              e.applyConfig(cfg.copyWith(boomWidthFt: v, sectionWidthsFt: widths));
+                              final widths = SprayerConfig.equalSections(
+                                v,
+                                cfg.sectionCount,
+                              );
+                              e.applyConfig(
+                                cfg.copyWith(
+                                  boomWidthFt: v,
+                                  sectionWidthsFt: widths,
+                                ),
+                              );
                             }),
                           ),
                           _stepper(
@@ -60,10 +68,15 @@ class SettingsScreen extends StatelessWidget {
                             min: 1,
                             max: 4,
                             onChanged: (v) => _set(() {
-                              e.applyConfig(cfg.copyWith(
-                                sectionCount: v,
-                                sectionWidthsFt: SprayerConfig.equalSections(cfg.boomWidthFt, v),
-                              ));
+                              e.applyConfig(
+                                cfg.copyWith(
+                                  sectionCount: v,
+                                  sectionWidthsFt: SprayerConfig.equalSections(
+                                    cfg.boomWidthFt,
+                                    v,
+                                  ),
+                                ),
+                              );
                             }),
                           ),
                           LabeledSlider(
@@ -73,7 +86,9 @@ class SettingsScreen extends StatelessWidget {
                             max: 30,
                             divisions: 56,
                             format: (v) => '${v.toStringAsFixed(1)} GPA',
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(targetGpa: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(cfg.copyWith(targetGpa: v)),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Design speed',
@@ -82,7 +97,11 @@ class SettingsScreen extends StatelessWidget {
                             max: 12,
                             divisions: 44,
                             format: (v) => '${v.toStringAsFixed(1)} MPH',
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(designSpeedMph: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(designSpeedMph: v),
+                              ),
+                            ),
                           ),
                         ]),
                         _section('VALVE & FLOW', [
@@ -93,7 +112,11 @@ class SettingsScreen extends StatelessWidget {
                             max: 12,
                             divisions: 20,
                             format: (v) => '${v.toStringAsFixed(1)} GPM',
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(valveMaxFlowGpm: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(valveMaxFlowGpm: v),
+                              ),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Valve min command',
@@ -102,7 +125,9 @@ class SettingsScreen extends StatelessWidget {
                             max: 20,
                             divisions: 20,
                             format: (v) => '${v.toStringAsFixed(0)}%',
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(valveMinPct: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(cfg.copyWith(valveMinPct: v)),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Valve max command',
@@ -111,7 +136,9 @@ class SettingsScreen extends StatelessWidget {
                             max: 100,
                             divisions: 40,
                             format: (v) => '${v.toStringAsFixed(0)}%',
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(valveMaxPct: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(cfg.copyWith(valveMaxPct: v)),
+                            ),
                           ),
                         ]),
                         _section('CONTROLLER', [
@@ -122,7 +149,8 @@ class SettingsScreen extends StatelessWidget {
                             max: 10,
                             divisions: 40,
                             format: (v) => v.toStringAsFixed(2),
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(kp: v))),
+                            onChanged: (v) =>
+                                _set(() => e.applyConfig(cfg.copyWith(kp: v))),
                           ),
                           LabeledSlider(
                             label: 'Integral gain (Ki)',
@@ -131,7 +159,8 @@ class SettingsScreen extends StatelessWidget {
                             max: 10,
                             divisions: 40,
                             format: (v) => v.toStringAsFixed(2),
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(ki: v))),
+                            onChanged: (v) =>
+                                _set(() => e.applyConfig(cfg.copyWith(ki: v))),
                           ),
                           LabeledSlider(
                             label: 'Deadband',
@@ -140,7 +169,9 @@ class SettingsScreen extends StatelessWidget {
                             max: 0.2,
                             divisions: 40,
                             format: (v) => '${v.toStringAsFixed(3)} GPM',
-                            onChanged: (v) => _set(() => e.applyConfig(cfg.copyWith(deadbandGpm: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(cfg.copyWith(deadbandGpm: v)),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Max correction rate',
@@ -149,8 +180,11 @@ class SettingsScreen extends StatelessWidget {
                             max: 100,
                             divisions: 95,
                             format: (v) => '${v.toStringAsFixed(0)}%/s',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(cfg.copyWith(maxCorrectionPctPerSec: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(maxCorrectionPctPerSec: v),
+                              ),
+                            ),
                           ),
                         ]),
                         _section('SAFETY', [
@@ -161,8 +195,11 @@ class SettingsScreen extends StatelessWidget {
                             max: 150,
                             divisions: 110,
                             format: (v) => '${v.toStringAsFixed(0)} PSI',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(cfg.copyWith(pressureAlarmHighPsi: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(pressureAlarmHighPsi: v),
+                              ),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Low pressure alarm',
@@ -171,8 +208,11 @@ class SettingsScreen extends StatelessWidget {
                             max: 40,
                             divisions: 40,
                             format: (v) => '${v.toStringAsFixed(0)} PSI',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(cfg.copyWith(pressureAlarmLowPsi: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(pressureAlarmLowPsi: v),
+                              ),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Loss-of-flow valve threshold',
@@ -181,8 +221,11 @@ class SettingsScreen extends StatelessWidget {
                             max: 100,
                             divisions: 50,
                             format: (v) => '${v.toStringAsFixed(0)}%',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(cfg.copyWith(lossOfFlowValvePct: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(lossOfFlowValvePct: v),
+                              ),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Loss-of-flow time',
@@ -191,13 +234,17 @@ class SettingsScreen extends StatelessWidget {
                             max: 10,
                             divisions: 19,
                             format: (v) => '${v.toStringAsFixed(1)} s',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(cfg.copyWith(lossOfFlowSeconds: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                cfg.copyWith(lossOfFlowSeconds: v),
+                              ),
+                            ),
                           ),
                         ]),
                         const SizedBox(height: 8),
                         GestureDetector(
-                          onTap: () => _set(() => e.applyConfig(const SprayerConfig())),
+                          onTap: () =>
+                              _set(() => e.applyConfig(const SprayerConfig())),
                           child: Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -208,7 +255,11 @@ class SettingsScreen extends StatelessWidget {
                             child: const Text(
                               'RESET TO DEFAULTS',
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w800),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
                         ),
@@ -242,9 +293,15 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  color: AppTheme.textDim, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.2)),
+          Text(
+            title,
+            style: const TextStyle(
+              color: AppTheme.textDim,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 8),
           ...children,
         ],
@@ -262,14 +319,27 @@ class SettingsScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(color: AppTheme.text, fontSize: 15, fontWeight: FontWeight.w600)),
+        Text(
+          label,
+          style: const TextStyle(
+            color: AppTheme.text,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         Row(
           children: [
             _stepButton('-', () => onChanged((value - 1).clamp(min, max))),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: Text('$value',
-                  style: const TextStyle(color: AppTheme.amber, fontSize: 18, fontWeight: FontWeight.w800)),
+              child: Text(
+                '$value',
+                style: const TextStyle(
+                  color: AppTheme.amber,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
             ),
             _stepButton('+', () => onChanged((value + 1).clamp(min, max))),
           ],
@@ -290,7 +360,14 @@ class SettingsScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: AppTheme.border),
         ),
-        child: Text(label, style: const TextStyle(color: AppTheme.text, fontSize: 20, fontWeight: FontWeight.w800)),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: AppTheme.text,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ),
     );
   }

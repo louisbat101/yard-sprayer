@@ -33,11 +33,19 @@ class LabeledSlider extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(color: AppTheme.text, fontSize: 15, fontWeight: FontWeight.w600),
+              style: const TextStyle(
+                color: AppTheme.text,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             Text(
               format(value),
-              style: const TextStyle(color: AppTheme.amber, fontSize: 16, fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                color: AppTheme.amber,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ],
         ),

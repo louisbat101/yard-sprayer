@@ -8,7 +8,8 @@ import 'gps_source.dart';
 /// Real GPS via the geolocator plugin (built-in phone/tablet GPS on Android,
 /// browser geolocation on web).
 class GeolocatorGpsSource implements GpsSource {
-  final StreamController<GpsFix> _controller = StreamController<GpsFix>.broadcast();
+  final StreamController<GpsFix> _controller =
+      StreamController<GpsFix>.broadcast();
   StreamSubscription<Position>? _sub;
 
   @override
@@ -39,16 +40,18 @@ class GeolocatorGpsSource implements GpsSource {
     );
     _sub = Geolocator.getPositionStream(locationSettings: settings).listen(
       (Position p) {
-        _controller.add(GpsFix(
-          time: DateTime.now(),
-          latitude: p.latitude,
-          longitude: p.longitude,
-          speedMps: p.speed, // m/s (0 if the receiver doesn't provide it)
-          headingDeg: p.heading, // degrees; 0 when stationary
-          accuracyM: p.accuracy,
-          satellites: null, // geolocator does not expose satellite count
-          hasFix: true,
-        ));
+        _controller.add(
+          GpsFix(
+            time: DateTime.now(),
+            latitude: p.latitude,
+            longitude: p.longitude,
+            speedMps: p.speed, // m/s (0 if the receiver doesn't provide it)
+            headingDeg: p.heading, // degrees; 0 when stationary
+            accuracyM: p.accuracy,
+            satellites: null, // geolocator does not expose satellite count
+            hasFix: true,
+          ),
+        );
       },
       onError: (Object _) {
         // Keep the last known fix; the UI will show a stale/still-searching

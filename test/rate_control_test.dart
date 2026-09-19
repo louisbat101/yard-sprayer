@@ -31,7 +31,11 @@ void main() {
     });
 
     test('Actual GPA is the inverse of required flow', () {
-      final gpa = SprayMath.actualGpa(flowGpm: 1.01, speedMph: 5, activeWidthFt: 10);
+      final gpa = SprayMath.actualGpa(
+        flowGpm: 1.01,
+        speedMph: 5,
+        activeWidthFt: 10,
+      );
       expect(gpa, closeTo(10, 0.1));
     });
   });
@@ -75,20 +79,26 @@ void main() {
       expect(e.requiredGpm, closeTo(0.61, 0.05));
     });
 
-    test('Test 6: injected low flow makes the valve open until flow recovers', () {
-      final e = makeEngine(flowError: -0.16); // e.g. a clogged nozzle
-      run(e, 200); // 20 s of control
-      expect(e.actualGpm, closeTo(e.requiredGpm, 0.08));
-      // Feed-forward alone would sit at ~16.8%; the controller must open wider.
-      expect(e.valvePositionPct, greaterThan(17));
-    });
+    test(
+      'Test 6: injected low flow makes the valve open until flow recovers',
+      () {
+        final e = makeEngine(flowError: -0.16); // e.g. a clogged nozzle
+        run(e, 200); // 20 s of control
+        expect(e.actualGpm, closeTo(e.requiredGpm, 0.08));
+        // Feed-forward alone would sit at ~16.8%; the controller must open wider.
+        expect(e.valvePositionPct, greaterThan(17));
+      },
+    );
 
-    test('Test 7: injected high flow makes the valve close until flow recovers', () {
-      final e = makeEngine(flowError: 0.16);
-      run(e, 200);
-      expect(e.actualGpm, closeTo(e.requiredGpm, 0.08));
-      expect(e.valvePositionPct, lessThan(30)); // valve had to throttle down
-    });
+    test(
+      'Test 7: injected high flow makes the valve close until flow recovers',
+      () {
+        final e = makeEngine(flowError: 0.16);
+        run(e, 200);
+        expect(e.actualGpm, closeTo(e.requiredGpm, 0.08));
+        expect(e.valvePositionPct, lessThan(30)); // valve had to throttle down
+      },
+    );
 
     test('Test 8: both sections off => zero flow and safe state', () {
       final e = makeEngine();

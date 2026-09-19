@@ -2,9 +2,22 @@
 
 Software prototype for an automatic agricultural / yard sprayer controller.
 This app **proves the rate-control, section-control, GPS and guidance logic**
-before the ESP32-S3 / Waveshare hardware is built. It needs no external
-hardware: it uses the device's built-in GPS and a simulated flow meter,
-proportional valve and pressure sensor.
+before the **ESP32-S3 hardware** is built. It needs no external hardware: it uses the device's built-in GPS and a simulated flow meter, solenoid valve and pressure sensor.
+
+## Hardware Target (ESP32-S3)
+
+**Valve Control:** 12V PWM solenoid coils (cheap, proven, NOT proportional valve)
+- 20 Hz PWM duty cycle (0-100%) directly maps to flow
+- Cost: $20-50 vs $150 for proportional valve
+- See [docs/esp32-pwm-solenoid.md](docs/esp32-pwm-solenoid.md) for firmware details
+
+**Other I/O:**
+- GPS: u-blox M10 (±5m accuracy, ~$40)
+- Flow meter: turbine sensor (frequency input, ~$60)
+- Pressure: 0-400 PSI transducer (0-5V ADC, ~$35)
+- Relays: pump master + section solenoids (GPIO outputs)
+
+**Total BOM: ~$270** (electronics only)
 
 ## What it does (Version 1)
 

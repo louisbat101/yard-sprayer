@@ -32,17 +32,17 @@ class JobRecord {
   });
 
   Map<String, dynamic> toJson() => {
-        'startedAt': startedAt.toIso8601String(),
-        'endedAt': endedAt?.toIso8601String(),
-        'targetGpa': targetGpa,
-        'avgActualGpa': avgActualGpa,
-        'avgSpeedMph': avgSpeedMph,
-        'totalGallons': totalGallons,
-        'acresCovered': acresCovered,
-        'distanceFt': distanceFt,
-        'timeSprayingSec': timeSprayingSec,
-        'track': track,
-      };
+    'startedAt': startedAt.toIso8601String(),
+    'endedAt': endedAt?.toIso8601String(),
+    'targetGpa': targetGpa,
+    'avgActualGpa': avgActualGpa,
+    'avgSpeedMph': avgSpeedMph,
+    'totalGallons': totalGallons,
+    'acresCovered': acresCovered,
+    'distanceFt': distanceFt,
+    'timeSprayingSec': timeSprayingSec,
+    'track': track,
+  };
 
   String encode() => jsonEncode(toJson());
 }

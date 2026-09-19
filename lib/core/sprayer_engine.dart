@@ -47,6 +47,7 @@ class SprayerEngine {
   double gpsLat = 0;
   double gpsLon = 0;
   bool gpsFixOk = false;
+  int satellites = 0;
 
   // --- Simulation inputs ---------------------------------------------------
   double simSpeedMph = 5.0;
@@ -69,17 +70,26 @@ class SprayerEngine {
   double activeWidthFt = 0;
 
   SprayerEngine({SprayerConfig? config})
-      : config = config ?? const SprayerConfig(),
-        sections = SectionController(config?.sectionCount ?? 2),
-        valve = ProportionalValve(),
-        flowMeter = SimulatedFlowMeter(),
-        pressureSensor = SimulatedPressureSensor(),
-        rateController = RateController(),
-        pump = PumpController(),
-        safety = SafetyMonitor();
+    : config = config ?? const SprayerConfig(),
+      sections = SectionController(config?.sectionCount ?? 2),
+      valve = ProportionalValve(),
+      flowMeter = SimulatedFlowMeter(),
+      pressureSensor = SimulatedPressureSensor(),
+      rateController = RateController(),
+      pump = PumpController(),
+      safety = SafetyMonitor();
 
   double get targetGpa => config.targetGpa;
   bool get pumpRunning => pump.running;
+
+  /// Current position/heading used by guidance, coverage and job recording.
+  double get currentLat => mode == SprayerMode.live ? gpsLat : simLat;
+  double get currentLon => mode == SprayerMode.live ? gpsLon : simLon;
+  double get currentHeadingDeg => headingDeg;
+
+  /// Satellites in view (reported by the native GNSS listener when live;
+  /// simulated count in SIM mode).
+  int get satelliteCount => mode == SprayerMode.simulation ? 12 : satellites;
 
   /// Feed a new GPS sample from the live receiver.
   void applyGpsFix(GpsFix fix) {
@@ -91,6 +101,7 @@ class SprayerEngine {
       gpsSpeedMph = fix.speedMph;
       gpsHeadingDeg = fix.headingDeg;
       gpsAccuracyM = fix.accuracyM;
+      satellites = fix.satellites ?? satellites;
     }
   }
 
@@ -119,16 +130,20 @@ class SprayerEngine {
       headingDeg = simHeadingDeg;
       _advanceSimulation(dt);
     } else {
-      speedMph =
-          SprayMath.ema(speedMph, gpsFixOk ? gpsSpeedMph : 0, config.speedFilterAlpha);
+      speedMph = SprayMath.ema(
+        speedMph,
+        gpsFixOk ? gpsSpeedMph : 0,
+        config.speedFilterAlpha,
+      );
       headingDeg = gpsHeadingDeg;
       simLat = gpsLat; // keep the mirror position for the UI
       simLon = gpsLon;
     }
 
     // 2) Active boom width --------------------------------------------------
-    activeWidthFt =
-        sprayOn ? sections.activeWidthFt(config.sectionWidthsFt) : 0.0;
+    activeWidthFt = sprayOn
+        ? sections.activeWidthFt(config.sectionWidthsFt)
+        : 0.0;
 
     // 3) Required flow (GPS + geometry only; NOT the flow meter) ------------
     requiredGpm = SprayMath.requiredGpm(
@@ -151,8 +166,10 @@ class SprayerEngine {
       rateController.reset(valvePct: 0);
       valveCommandPct = 0;
     } else {
-      final double ff =
-          SprayMath.feedforwardValvePct(requiredGpm, config.valveMaxFlowGpm);
+      final double ff = SprayMath.feedforwardValvePct(
+        requiredGpm,
+        config.valveMaxFlowGpm,
+      );
       valveCommandPct = rateController.update(
         requiredGpm: requiredGpm,
         actualGpm: actualGpm,

@@ -35,7 +35,11 @@ class CoverageMap {
 
     // Total live width across the boom.
     double liveWidth = 0;
-    for (var i = 0; i < sectionStates.length && i < sectionWidthsFt.length; i++) {
+    for (
+      var i = 0;
+      i < sectionStates.length && i < sectionWidthsFt.length;
+      i++
+    ) {
       if (sectionStates[i]) liveWidth += sectionWidthsFt[i];
     }
 

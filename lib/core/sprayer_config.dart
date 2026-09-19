@@ -98,11 +98,13 @@ class SprayerConfig {
       valveMaxFlowGpm: valveMaxFlowGpm ?? this.valveMaxFlowGpm,
       valveMinPct: valveMinPct ?? this.valveMinPct,
       valveMaxPct: valveMaxPct ?? this.valveMaxPct,
-      valveMaxSlewPctPerSec: valveMaxSlewPctPerSec ?? this.valveMaxSlewPctPerSec,
+      valveMaxSlewPctPerSec:
+          valveMaxSlewPctPerSec ?? this.valveMaxSlewPctPerSec,
       kp: kp ?? this.kp,
       ki: ki ?? this.ki,
       deadbandGpm: deadbandGpm ?? this.deadbandGpm,
-      maxCorrectionPctPerSec: maxCorrectionPctPerSec ?? this.maxCorrectionPctPerSec,
+      maxCorrectionPctPerSec:
+          maxCorrectionPctPerSec ?? this.maxCorrectionPctPerSec,
       flowFilterAlpha: flowFilterAlpha ?? this.flowFilterAlpha,
       gpaFilterAlpha: gpaFilterAlpha ?? this.gpaFilterAlpha,
       speedFilterAlpha: speedFilterAlpha ?? this.speedFilterAlpha,

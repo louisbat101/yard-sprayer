@@ -67,8 +67,11 @@ class SimulationScreen extends StatelessWidget {
                             max: 20,
                             divisions: 90,
                             format: (v) => '${v.toStringAsFixed(1)} GPA',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(e.config.copyWith(targetGpa: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                e.config.copyWith(targetGpa: v),
+                              ),
+                            ),
                           ),
                           LabeledSlider(
                             label: 'Heading',
@@ -106,19 +109,33 @@ class SimulationScreen extends StatelessWidget {
                             max: 10,
                             divisions: 16,
                             format: (v) => '${v.toStringAsFixed(1)} GPM',
-                            onChanged: (v) =>
-                                _set(() => e.applyConfig(e.config.copyWith(valveMaxFlowGpm: v))),
+                            onChanged: (v) => _set(
+                              () => e.applyConfig(
+                                e.config.copyWith(valveMaxFlowGpm: v),
+                              ),
+                            ),
                           ),
                           SwitchListTile(
                             value: e.manualValveOverride,
                             activeThumbColor: AppTheme.amber,
-                            title: const Text('Manual valve override (open-loop)',
-                                style: TextStyle(color: AppTheme.text, fontWeight: FontWeight.w600)),
-                            subtitle: const Text('Off = closed-loop rate control',
-                                style: TextStyle(color: AppTheme.textDim)),
+                            title: const Text(
+                              'Manual valve override (open-loop)',
+                              style: TextStyle(
+                                color: AppTheme.text,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            subtitle: const Text(
+                              'Off = closed-loop rate control',
+                              style: TextStyle(color: AppTheme.textDim),
+                            ),
                             onChanged: (v) => _set(() {
                               e.manualValveOverride = v;
-                              if (v) e.rateController.reset(valvePct: e.manualValvePct);
+                              if (v) {
+                                e.rateController.reset(
+                                  valvePct: e.manualValvePct,
+                                );
+                              }
                             }),
                           ),
                           if (e.manualValveOverride)
@@ -129,7 +146,8 @@ class SimulationScreen extends StatelessWidget {
                               max: 100,
                               divisions: 100,
                               format: (v) => '${v.toStringAsFixed(0)}%',
-                              onChanged: (v) => _set(() => e.manualValvePct = v),
+                              onChanged: (v) =>
+                                  _set(() => e.manualValvePct = v),
                             ),
                         ]),
                         _section('SECTIONS', [
@@ -138,9 +156,15 @@ class SimulationScreen extends StatelessWidget {
                               Expanded(
                                 child: BigToggle(
                                   label: 'LEFT',
-                                  sublabel: '${e.config.sectionWidthsFt[0].toStringAsFixed(0)} FT',
+                                  sublabel:
+                                      '${e.config.sectionWidthsFt[0].toStringAsFixed(0)} FT',
                                   on: e.sections.isOn(0),
-                                  onTap: () => _set(() => e.sections.setOn(0, !e.sections.isOn(0))),
+                                  onTap: () => _set(
+                                    () => e.sections.setOn(
+                                      0,
+                                      !e.sections.isOn(0),
+                                    ),
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -150,7 +174,9 @@ class SimulationScreen extends StatelessWidget {
                                   sublabel: e.config.sectionCount > 1
                                       ? '${e.config.sectionWidthsFt[1].toStringAsFixed(0)} FT'
                                       : '',
-                                  on: e.config.sectionCount > 1 && e.sections.isOn(1),
+                                  on:
+                                      e.config.sectionCount > 1 &&
+                                      e.sections.isOn(1),
                                   onTap: () => _set(() {
                                     if (e.config.sectionCount > 1) {
                                       e.sections.setOn(1, !e.sections.isOn(1));
@@ -167,8 +193,11 @@ class SimulationScreen extends StatelessWidget {
                             Expanded(
                               child: _actionButton(
                                 label: e.sprayOn ? 'STOP' : 'START SIMULATION',
-                                color: e.sprayOn ? AppTheme.danger : AppTheme.accent,
-                                onTap: () => _set(() => e.setSprayOn(!e.sprayOn)),
+                                color: e.sprayOn
+                                    ? AppTheme.danger
+                                    : AppTheme.accent,
+                                onTap: () =>
+                                    _set(() => e.setSprayOn(!e.sprayOn)),
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -176,7 +205,9 @@ class SimulationScreen extends StatelessWidget {
                               child: _actionButton(
                                 label: 'RESET CTL',
                                 color: AppTheme.amber,
-                                onTap: () => _set(() => e.rateController.reset(valvePct: 0)),
+                                onTap: () => _set(
+                                  () => e.rateController.reset(valvePct: 0),
+                                ),
                               ),
                             ),
                           ],
@@ -184,7 +215,10 @@ class SimulationScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           'GPS: ${e.simLat.toStringAsFixed(5)}, ${e.simLon.toStringAsFixed(5)}',
-                          style: const TextStyle(color: AppTheme.textDim, fontSize: 12),
+                          style: const TextStyle(
+                            color: AppTheme.textDim,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
@@ -226,11 +260,23 @@ class SimulationScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(label, style: const TextStyle(color: AppTheme.textDim, fontSize: 11)),
+            Text(
+              label,
+              style: const TextStyle(color: AppTheme.textDim, fontSize: 11),
+            ),
             const SizedBox(height: 4),
-            Text(value,
-                style: const TextStyle(color: AppTheme.text, fontSize: 18, fontWeight: FontWeight.w700)),
-            Text(unit, style: const TextStyle(color: AppTheme.textDim, fontSize: 10)),
+            Text(
+              value,
+              style: const TextStyle(
+                color: AppTheme.text,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              unit,
+              style: const TextStyle(color: AppTheme.textDim, fontSize: 10),
+            ),
           ],
         ),
       ),
@@ -249,9 +295,15 @@ class SimulationScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  color: AppTheme.textDim, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.2)),
+          Text(
+            title,
+            style: const TextStyle(
+              color: AppTheme.textDim,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 8),
           ...children,
         ],
@@ -259,7 +311,11 @@ class SimulationScreen extends StatelessWidget {
     );
   }
 
-  Widget _actionButton({required String label, required Color color, required VoidCallback onTap}) {
+  Widget _actionButton({
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -281,7 +337,11 @@ class SimulationScreen extends StatelessWidget {
     );
   }
 
-  Widget _chip({required String label, required Color color, VoidCallback? onTap}) {
+  Widget _chip({
+    required String label,
+    required Color color,
+    VoidCallback? onTap,
+  }) {
     final content = Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
@@ -289,7 +349,14 @@ class SimulationScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withValues(alpha: 0.6)),
       ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w700)),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
     if (onTap == null) return content;
     return GestureDetector(onTap: onTap, child: content);

@@ -20,11 +20,11 @@ class ReadoutTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
       decoration: BoxDecoration(
         color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppTheme.border),
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: AppTheme.border, width: 0.8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,14 +32,15 @@ class ReadoutTile extends StatelessWidget {
         children: [
           Text(
             label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: AppTheme.textDim,
-              fontSize: 13,
+              fontSize: 9,
               fontWeight: FontWeight.w600,
-              letterSpacing: 1.1,
+              letterSpacing: 0.4,
             ),
           ),
-          const SizedBox(height: 4),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -47,17 +48,18 @@ class ReadoutTile extends StatelessWidget {
               value,
               style: TextStyle(
                 color: valueColor ?? AppTheme.text,
-                fontSize: 34,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
                 fontFeatures: const [FontFeature.tabularFigures()],
-                height: 1.05,
+                height: 0.9,
               ),
             ),
           ),
-          const SizedBox(height: 2),
           Text(
             unit,
-            style: const TextStyle(color: AppTheme.textDim, fontSize: 13),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: AppTheme.textDim, fontSize: 8),
           ),
         ],
       ),

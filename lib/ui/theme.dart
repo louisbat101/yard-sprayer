@@ -10,6 +10,8 @@ class AppTheme {
   static const Color border = Color(0xFF2A4232);
   static const Color accent = Color(0xFF3DDC84); // spray green
   static const Color amber = Color(0xFFFFB300);
+  static const Color yellow = Color(0xFFFFEB3B);
+  static const Color blue = Color(0xFF4FC3F7);
   static const Color danger = Color(0xFFFF5252);
   static const Color text = Color(0xFFE8F1EA);
   static const Color textDim = Color(0xFF8FA695);
@@ -39,7 +41,9 @@ class AppTheme {
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => TextStyle(
             color: states.contains(WidgetState.selected) ? accent : textDim,
-            fontWeight: states.contains(WidgetState.selected) ? FontWeight.w700 : FontWeight.w500,
+            fontWeight: states.contains(WidgetState.selected)
+                ? FontWeight.w700
+                : FontWeight.w500,
             fontSize: 13,
           ),
         ),

@@ -25,7 +25,9 @@ class SimulatedPressureSensor {
     required double dropPerGpm,
   }) {
     final double noise = (_rng.nextDouble() - 0.5) * 1.0; // ±0.5 PSI
-    double target = pumpRunning ? (idlePsi - dropPerGpm * flowGpm + biasPsi + noise) : 0.0;
+    double target = pumpRunning
+        ? (idlePsi - dropPerGpm * flowGpm + biasPsi + noise)
+        : 0.0;
     if (target < 0) target = 0;
     _value = SprayMath.ema(_value, target, 0.3);
     return _value;
